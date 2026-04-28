@@ -1,0 +1,23 @@
+# Core training/evaluation stack for the planned experiments.
+torch
+transformers
+datasets
+tokenizers
+accelerate
+safetensors
+
+# Data handling and metrics.
+pandas
+numpy
+scikit-learn
+tqdm
+
+# Baseline access and reports.
+ollama
+requests
+matplotlib
+
+# Development checks.
+pytest
+ruff
+

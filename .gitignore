@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Environments
+.venv/
+venv/
+env/
+.env
+.env.*
+
+# Data and model artifacts
+data/
+datasets/
+models/
+checkpoints/
+outputs/
+runs/
+wandb/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.onnx
+*.gguf
+*.litertlm
+*.task
+
+# Large or generated experiment artifacts
+logs/
+results/raw/
+results/checkpoints/
+experiments/runs/
+
+# Keep small curated result files and figures trackable
+!results/.gitkeep
+!experiments/.gitkeep
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
