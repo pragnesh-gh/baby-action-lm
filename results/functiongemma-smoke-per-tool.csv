@@ -1,0 +1,8 @@
+model,eval_set,tool,n,parse_rate,function_accuracy,argument_exact_match,tool_call_exact_match
+functiongemma:270m,smoke-32,create_calendar_event,7,1.0,0.8571428571428571,0.42857142857142855,0.42857142857142855
+functiongemma:270m,smoke-32,create_contact,7,1.0,0.7142857142857143,0.2857142857142857,0.2857142857142857
+functiongemma:270m,smoke-32,open_wifi_settings,1,1.0,1.0,1.0,1.0
+functiongemma:270m,smoke-32,send_email,5,1.0,0.4,0.4,0.4
+functiongemma:270m,smoke-32,show_map,5,0.6,0.4,0.4,0.4
+functiongemma:270m,smoke-32,turn_off_flashlight,2,1.0,1.0,1.0,1.0
+functiongemma:270m,smoke-32,turn_on_flashlight,5,1.0,1.0,1.0,1.0

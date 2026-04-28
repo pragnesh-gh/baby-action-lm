@@ -31,30 +31,50 @@ The phone actions are simulated with the `google/mobile-actions` dataset rather 
 ## Repository Layout
 
 - `docs/` - teacher pitch, scope, and project planning notes
-- `src/` - future data preparation, training, and evaluation scripts
-- `experiments/` - configs and small experiment summaries
+- `src/` - data preparation, formatting, training, evaluation, and baseline scripts
+- `experiments/` - YAML configs and small experiment summaries
 - `results/` - small result tables and figures only
 - `notebooks/` - optional exploratory notebooks
 - `references/` - paper notes and bibliography material
-- `scripts/` - utility commands for local workflow
-- `tests/` - future parser/evaluation tests
+- `tests/` - parser, formatting, metric, training, and baseline tests
 
 ## Quickstart
 
-1. Create and activate a Python environment.
-2. Install dependencies:
+The current local execution target is the existing Conda environment `gpu-base`.
+
+1. Install the package and dependencies:
 
 ```powershell
-pip install -r requirements.txt
+conda --no-plugins run -n gpu-base python -m pip install -r requirements.txt
+conda --no-plugins run -n gpu-base python -m pip install -e .
 ```
 
-3. Pull the FunctionGemma baseline when ready:
+2. Run tests:
+
+```powershell
+conda --no-plugins run -n gpu-base pytest -q
+```
+
+3. Run the BabyB smoke fine-tune:
+
+```powershell
+conda --no-plugins run -n gpu-base python -m babyactionlm.train experiments/configs/smoke.yaml
+```
+
+4. Evaluate the BabyB smoke checkpoint:
+
+```powershell
+conda --no-plugins run -n gpu-base python -m babyactionlm.evaluate experiments/configs/evaluate_smoke.yaml
+```
+
+5. Pull and run the FunctionGemma smoke baseline:
 
 ```powershell
 ollama pull functiongemma:270m
+conda --no-plugins run -n gpu-base python -m babyactionlm.ollama_baseline experiments/configs/functiongemma_smoke.yaml
 ```
 
-4. Read the teacher-facing pitch:
+6. Read the teacher-facing pitch:
 
 ```powershell
 Get-Content docs\pitch_and_plan.md
@@ -63,4 +83,3 @@ Get-Content docs\pitch_and_plan.md
 ## Important Scope Boundary
 
 This project does **not** build an Android app. It studies the NLP core of a possible on-device agent: mapping language commands to structured phone tool calls.
-

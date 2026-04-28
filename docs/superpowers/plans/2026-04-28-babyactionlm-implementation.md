@@ -8,6 +8,8 @@
 
 **Tech Stack:** Python, Hugging Face `datasets`, `transformers`, `tokenizers`, PyTorch, Ollama, pandas, pytest.
 
+**Implementation status on 2026-04-28:** Stage 1 through the smoke portions of Stage 5 are implemented on branch `babyactionlm-core`. Core package tests pass, BabyB smoke fine-tune/eval runs, and FunctionGemma smoke baseline runs. Remaining work is full BabyA/B fine-tuning, full eval, optional full FunctionGemma eval, and final report interpretation.
+
 ---
 
 ## Stage 1: Environment And Dataset Access
@@ -172,4 +174,3 @@
 - [ ] Verify every new design decision is appended to `docs/decision_log.md`.
 - [ ] Verify every major experiment command is appended to `docs/run_log.md`.
 - [ ] Push committed changes to `origin/main` when the user asks for the completed stage to be published.
-

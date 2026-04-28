@@ -1,0 +1,10 @@
+model: functiongemma:270m
+eval_set: eval
+eval_cap: 1000
+eval_limit:
+seed: 42
+use_native_tools: true
+raw_predictions_path: outputs/predictions/functiongemma-zero-shot.jsonl
+summary_path: results/functiongemma-summary.csv
+per_tool_path: results/functiongemma-per-tool.csv
+

@@ -1,0 +1,11 @@
+model_name: babyB-smoke
+model_dir: outputs/models/babyB-smoke
+eval_set: smoke-32
+eval_limit: 32
+eval_cap: 1000
+seed: 42
+max_new_tokens: 64
+raw_predictions_path: outputs/predictions/babyB-smoke.jsonl
+summary_path: results/babyB-smoke-summary.csv
+per_tool_path: results/babyB-smoke-per-tool.csv
+

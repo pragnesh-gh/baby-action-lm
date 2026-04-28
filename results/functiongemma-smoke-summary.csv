@@ -1,0 +1,2 @@
+model,checkpoint,eval_set,n,parse_rate,function_accuracy,argument_exact_match,tool_call_exact_match,timestamp,config_path
+functiongemma:270m,functiongemma:270m,smoke-32,32,0.9375,0.71875,0.53125,0.53125,2026-04-28T18:23:13,experiments\configs\functiongemma_smoke.yaml

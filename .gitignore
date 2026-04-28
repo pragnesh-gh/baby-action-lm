@@ -3,9 +3,11 @@ __pycache__/
 *.py[cod]
 *.pyo
 .pytest_cache/
+pytest-cache-files-*/
 .ruff_cache/
 .mypy_cache/
 .ipynb_checkpoints/
+*.egg-info/
 
 # Environments
 .venv/
@@ -46,4 +48,3 @@ experiments/runs/
 Thumbs.db
 .idea/
 .vscode/
-

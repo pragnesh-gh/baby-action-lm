@@ -52,3 +52,52 @@ This file is append-only except for typo fixes.
 
 **Consequences:** Agents must update project memory, decision log, assumptions, and run log after meaningful changes.
 
+## 2026-04-28: Canonical Checkpoint Paths
+
+**Decision:** Use nested BabyA/B artifacts under `../Assignments/Main/models/babyA/final/final` and `../Assignments/Main/models/babyB/final/final`.
+
+**Reason:** The nested artifacts have consistent tokenizer/model settings: `pad_token_id=1`, vocab size 8000, and 128-token context.
+
+**Alternatives considered:** Use the parent `final` folders.
+
+**Consequences:** Experiment configs point to the nested `final/final` directories.
+
+## 2026-04-28: Prompt And Target Contract
+
+**Decision:** Fine-tune BabyA/B on a compact prompt and compact canonical JSON target.
+
+**Reason:** BabyA/B have a 128-token context window, so verbose tool descriptions risk crowding out the command and target.
+
+**Alternatives considered:** Include full developer context and full tool descriptions.
+
+**Consequences:** The v1 prompt uses tool signatures only, and evaluation left-truncates prompts to leave room for generated JSON.
+
+## 2026-04-28: Metric Contract
+
+**Decision:** Score parse rate, function accuracy, argument exact match, exact tool-call match, and per-tool summaries over all examples.
+
+**Reason:** These metrics directly reflect structured parsing behavior and keep BabyA/B and FunctionGemma comparable.
+
+**Alternatives considered:** Required-argument-only scoring; partial string similarity.
+
+**Consequences:** Extra predicted arguments make argument exact match false; argument key order does not matter.
+
+## 2026-04-28: Smoke-First Training Defaults
+
+**Decision:** Start with full fine-tuning, 128-token examples, `learning_rate=5e-5`, batch size 4, gradient accumulation 8, and one-epoch smoke runs before full 3-epoch BabyA/B runs.
+
+**Reason:** The local GPU has 4 GB VRAM, and smoke runs catch formatting/model issues quickly.
+
+**Alternatives considered:** LoRA; scratch training first; full BabyA/B training immediately.
+
+**Consequences:** `experiments/configs/smoke.yaml`, `babyA.yaml`, and `babyB.yaml` encode conservative defaults.
+
+## 2026-04-28: FunctionGemma Adapter
+
+**Decision:** Use Ollama native tool calling for FunctionGemma and normalize Ollama pydantic tool-call objects into the shared `ToolCall` schema.
+
+**Reason:** Native tool calling is the fair practical baseline for a function-calling model; parsing must handle Ollama's object responses, not only dicts.
+
+**Alternatives considered:** Prompt-only JSON baseline.
+
+**Consequences:** Mobile Actions tool schemas are normalized for Ollama by lowercasing schema types and dropping null properties.

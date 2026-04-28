@@ -1,0 +1,2 @@
+model,checkpoint,eval_set,n,parse_rate,function_accuracy,argument_exact_match,tool_call_exact_match,timestamp,config_path
+babyB-smoke,outputs/models/babyB-smoke,smoke-32,32,0.0,0.0,0.0,0.0,2026-04-28T18:17:31,experiments\configs\evaluate_smoke.yaml

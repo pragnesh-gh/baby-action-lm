@@ -1,0 +1,10 @@
+model: functiongemma:270m
+eval_set: smoke-32
+eval_cap: 1000
+eval_limit: 32
+seed: 42
+use_native_tools: true
+raw_predictions_path: outputs/predictions/functiongemma-smoke.jsonl
+summary_path: results/functiongemma-smoke-summary.csv
+per_tool_path: results/functiongemma-smoke-per-tool.csv
+

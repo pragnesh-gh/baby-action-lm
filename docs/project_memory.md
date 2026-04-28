@@ -22,12 +22,15 @@ Dataset:
 
 - `google/mobile-actions` from Hugging Face.
 - The dataset has one HF split named `train`; the real train/eval distinction is in the `metadata` field.
+- Local inspection found 9,654 rows: 8,693 `train` and 961 `eval`.
 - Each row contains 7 available tools and a 3-message trace: developer context, user command, assistant tool call.
+- The canonical target is compact JSON: `{"name":"tool_name","arguments":{...}}`.
+- The Baby prompt is compact: task instruction, semicolon-separated tool signatures, command, then `JSON:`.
 
 Models:
 
-- BabyA checkpoint: `../Assignments/Main/models/babyA/final`
-- BabyB checkpoint: `../Assignments/Main/models/babyB/final`
+- BabyA checkpoint: `../Assignments/Main/models/babyA/final/final`
+- BabyB checkpoint: `../Assignments/Main/models/babyB/final/final`
 - Optional scratch tiny LLaMA-style control after BabyA/B are working.
 - Zero-shot baseline: `functiongemma:270m` through Ollama.
 
@@ -35,16 +38,17 @@ Evaluation:
 
 - Parse rate.
 - Function accuracy.
-- Argument accuracy.
+- Argument exact match.
 - Exact tool-call match.
 - Per-tool breakdown and qualitative error examples.
 
 ## Current Repository State
 
 - Repository: `pragnesh-gh/baby-action-lm`
-- Branch: `main`
+- Branch: `babyactionlm-core`
 - Initial scaffold is pushed to GitHub.
-- Living documentation system has been added before dataset download or model code.
+- Core package, tests, configs, smoke fine-tune, smoke evaluation, and FunctionGemma smoke baseline are implemented locally.
+- Tracked smoke result CSVs exist under `results/`; raw predictions and checkpoints are ignored under `outputs/`.
 
 ## Active Implementation Plan
 
@@ -52,14 +56,14 @@ Use `docs/superpowers/plans/2026-04-28-babyactionlm-implementation.md`.
 
 ## Next Actions
 
-1. Install project dependencies in an environment suitable for CUDA training.
-2. Pull `functiongemma:270m` with Ollama.
-3. Implement dataset loading, splitting, and prompt/target formatting.
-4. Add parser and metric tests before model work.
-5. Run a 32-example smoke test before full fine-tuning.
+1. Review smoke outputs and decide whether to tune the prompt before full BabyA/B training.
+2. Run full BabyB fine-tuning with `experiments/configs/babyB.yaml`.
+3. Run full BabyA fine-tuning with `experiments/configs/babyA.yaml`.
+4. Evaluate BabyA/B on the full 961-example eval split.
+5. Optionally run full FunctionGemma eval with `experiments/configs/functiongemma_zero_shot.yaml`.
 
 ## Open Questions
 
-- Whether max sequence length 128 is enough for all Mobile Actions prompts, or whether 256 is needed.
-- Whether RTX 3050 Ti 4 GB VRAM can fine-tune with full prompts, or whether prompt compression is required.
-- Whether FunctionGemma should be evaluated on the full eval subset or a stratified capped subset for runtime.
+- Whether the compact Baby prompt should include richer tool descriptions after checking token coverage.
+- Whether 3 epochs are enough for BabyA/B full fine-tuning.
+- Whether FunctionGemma full eval runtime is acceptable; smoke-32 took about one minute.

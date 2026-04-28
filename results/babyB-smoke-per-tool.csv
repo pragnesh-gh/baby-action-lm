@@ -1,0 +1,8 @@
+model,eval_set,tool,n,parse_rate,function_accuracy,argument_exact_match,tool_call_exact_match
+babyB-smoke,smoke-32,create_calendar_event,7,0.0,0.0,0.0,0.0
+babyB-smoke,smoke-32,create_contact,7,0.0,0.0,0.0,0.0
+babyB-smoke,smoke-32,open_wifi_settings,1,0.0,0.0,0.0,0.0
+babyB-smoke,smoke-32,send_email,5,0.0,0.0,0.0,0.0
+babyB-smoke,smoke-32,show_map,5,0.0,0.0,0.0,0.0
+babyB-smoke,smoke-32,turn_off_flashlight,2,0.0,0.0,0.0,0.0
+babyB-smoke,smoke-32,turn_on_flashlight,5,0.0,0.0,0.0,0.0
