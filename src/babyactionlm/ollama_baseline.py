@@ -110,7 +110,15 @@ def run_ollama_baseline(config_path: str | Path) -> None:
         gold = from_dataset_function(record.messages[2]["tool_calls"][0]["function"])
         golds.append(gold)
         preds.append(pred)
-        raw_rows.append({"id": record.id, "gold": gold.__dict__, "prediction": pred.__dict__, "response": response})
+        raw_rows.append(
+            {
+                "id": record.id,
+                "command": extract_user_command(record),
+                "gold": gold.__dict__,
+                "prediction": pred.__dict__,
+                "response": response,
+            }
+        )
 
     timestamp = datetime.now().isoformat(timespec="seconds")
     summary = score_predictions(

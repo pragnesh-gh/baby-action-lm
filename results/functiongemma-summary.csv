@@ -1,0 +1,2 @@
+model,checkpoint,eval_set,n,parse_rate,function_accuracy,argument_exact_match,tool_call_exact_match,timestamp,config_path
+functiongemma:270m,functiongemma:270m,eval,961,0.9812695109261186,0.7096774193548387,0.5098855359001041,0.4963579604578564,2026-04-28T19:06:35,experiments\configs\functiongemma_zero_shot.yaml

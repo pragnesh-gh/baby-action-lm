@@ -1,0 +1,8 @@
+model,eval_set,tool,n,parse_rate,function_accuracy,argument_exact_match,tool_call_exact_match
+babyA,eval,create_calendar_event,214,0.02336448598130841,0.0,0.0,0.0
+babyA,eval,create_contact,182,0.01098901098901099,0.0,0.0,0.0
+babyA,eval,open_wifi_settings,107,0.018691588785046728,0.0,0.0,0.0
+babyA,eval,send_email,134,0.014925373134328358,0.0,0.0,0.0
+babyA,eval,show_map,148,0.02027027027027027,0.02027027027027027,0.0,0.0
+babyA,eval,turn_off_flashlight,91,0.03296703296703297,0.0,0.0,0.0
+babyA,eval,turn_on_flashlight,85,0.011764705882352941,0.0,0.0,0.0

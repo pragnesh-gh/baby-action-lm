@@ -81,7 +81,15 @@ def evaluate_from_config(config_path: str | Path) -> None:
         pred = parse_tool_call(text)
         golds.append(gold)
         preds.append(pred)
-        raw_rows.append({"id": record.id, "gold": gold.__dict__, "prediction": pred.__dict__, "raw_text": text})
+        raw_rows.append(
+            {
+                "id": record.id,
+                "command": record.messages[1]["content"],
+                "gold": gold.__dict__,
+                "prediction": pred.__dict__,
+                "raw_text": text,
+            }
+        )
 
     timestamp = datetime.now().isoformat(timespec="seconds")
     summary = score_predictions(

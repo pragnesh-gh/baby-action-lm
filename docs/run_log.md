@@ -103,3 +103,51 @@ Append meaningful commands, inspections, runs, and verification outcomes here.
 **Result:** `functiongemma:270m` is installed locally at about 300 MB. Smoke metrics: parse rate `0.9375`, function accuracy `0.71875`, argument exact match `0.53125`, exact tool-call match `0.53125`.
 
 **Consequence:** The FunctionGemma baseline path works with native Ollama tool calls after schema normalization.
+
+## 2026-04-28: Project Flow And Version Roadmap
+
+**Action:** Added `docs/project_flow.md` and `docs/version_roadmap.md`.
+
+**Finding:** v1 is the course deliverable; v1.5 through v4 are optional strengthening paths.
+
+**Consequence:** Future sessions should use these docs to avoid re-discussing the overall flow from scratch.
+
+## 2026-04-28: Full BabyB Fine-Tune And Eval
+
+**Action:** Fine-tuned BabyB on the full Mobile Actions training split and evaluated on all 961 eval examples.
+
+**Commands:** `conda --no-plugins run -n gpu-base python -m babyactionlm.train experiments/configs/babyB.yaml`; `conda --no-plugins run -n gpu-base python -m babyactionlm.evaluate experiments/configs/evaluate_babyB.yaml`
+
+**Result:** Final training eval loss `1.4563`. Full eval metrics: parse rate `0.3559`, function accuracy `0.0531`, argument exact match `0.0`, exact tool-call match `0.0`.
+
+**Consequence:** BabyB learned to produce parseable fragments much more often than BabyA, but not reliable exact tool calls under v1 formatting.
+
+## 2026-04-28: Full BabyA Fine-Tune And Eval
+
+**Action:** Fine-tuned BabyA with the same settings and evaluated on all 961 eval examples.
+
+**Commands:** `conda --no-plugins run -n gpu-base python -m babyactionlm.train experiments/configs/babyA.yaml`; `conda --no-plugins run -n gpu-base python -m babyactionlm.evaluate experiments/configs/evaluate_babyA.yaml`
+
+**Result:** Final training eval loss `2.3431`. Full eval metrics: parse rate `0.0187`, function accuracy `0.0031`, argument exact match `0.0`, exact tool-call match `0.0`.
+
+**Consequence:** BabyA is much weaker than BabyB on this task, supporting the idea that the stronger BabyLM pretraining helps.
+
+## 2026-04-28: Full FunctionGemma Eval
+
+**Action:** Evaluated `functiongemma:270m` with native Ollama tool calls on all 961 eval examples.
+
+**Command:** `conda --no-plugins run -n gpu-base python -m babyactionlm.ollama_baseline experiments/configs/functiongemma_zero_shot.yaml`
+
+**Result:** Full eval metrics: parse rate `0.9813`, function accuracy `0.7097`, argument exact match `0.5099`, exact tool-call match `0.4964`.
+
+**Consequence:** FunctionGemma is far stronger than BabyA/B and provides a useful practical ceiling/reference point.
+
+## 2026-04-28: Analysis Artifacts
+
+**Action:** Built combined result tables, plots, and qualitative examples.
+
+**Command:** `conda --no-plugins run -n gpu-base python -m babyactionlm.analysis`
+
+**Result:** Created `results/summary.csv`, `results/per_tool.csv`, `results/figures/metric_comparison.png`, `results/figures/per_tool_exact_match.png`, and `results/qualitative_examples.md`.
+
+**Consequence:** The project now has quantitative and qualitative artifacts for the report.

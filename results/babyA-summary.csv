@@ -1,0 +1,2 @@
+model,checkpoint,eval_set,n,parse_rate,function_accuracy,argument_exact_match,tool_call_exact_match,timestamp,config_path
+babyA,outputs/models/babyA,eval,961,0.018730489073881373,0.003121748178980229,0.0,0.0,2026-04-28T18:49:56,experiments\configs\evaluate_babyA.yaml

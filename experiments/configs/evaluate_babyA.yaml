@@ -1,0 +1,10 @@
+model_name: babyA
+model_dir: outputs/models/babyA
+eval_set: eval
+eval_cap: 1000
+seed: 42
+max_new_tokens: 64
+raw_predictions_path: outputs/predictions/babyA-eval.jsonl
+summary_path: results/babyA-summary.csv
+per_tool_path: results/babyA-per-tool.csv
+

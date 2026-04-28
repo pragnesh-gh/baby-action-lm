@@ -42,28 +42,37 @@ Evaluation:
 - Exact tool-call match.
 - Per-tool breakdown and qualitative error examples.
 
+Current full-eval results on 961 examples:
+
+- BabyA: parse `0.0187`, function accuracy `0.0031`, exact tool-call match `0.0`.
+- BabyB: parse `0.3559`, function accuracy `0.0531`, exact tool-call match `0.0`.
+- FunctionGemma: parse `0.9813`, function accuracy `0.7097`, exact tool-call match `0.4964`.
+
 ## Current Repository State
 
 - Repository: `pragnesh-gh/baby-action-lm`
 - Branch: `babyactionlm-core`
 - Initial scaffold is pushed to GitHub.
-- Core package, tests, configs, smoke fine-tune, smoke evaluation, and FunctionGemma smoke baseline are implemented locally.
-- Tracked smoke result CSVs exist under `results/`; raw predictions and checkpoints are ignored under `outputs/`.
+- Core package, tests, configs, full BabyA/B fine-tuning/evaluation, full FunctionGemma evaluation, plots, and qualitative examples are implemented locally.
+- Tracked result CSVs and figures exist under `results/`; raw predictions and checkpoints are ignored under `outputs/`.
 
 ## Active Implementation Plan
 
 Use `docs/superpowers/plans/2026-04-28-babyactionlm-implementation.md`.
 
+For the human-readable project flow, use `docs/project_flow.md`.
+
+For the versioned roadmap, use `docs/version_roadmap.md`.
+
 ## Next Actions
 
-1. Review smoke outputs and decide whether to tune the prompt before full BabyA/B training.
-2. Run full BabyB fine-tuning with `experiments/configs/babyB.yaml`.
-3. Run full BabyA fine-tuning with `experiments/configs/babyA.yaml`.
-4. Evaluate BabyA/B on the full 961-example eval split.
-5. Optionally run full FunctionGemma eval with `experiments/configs/functiongemma_zero_shot.yaml`.
+1. Interpret the full v1 results in `docs/report_draft.md`.
+2. Decide whether to run a v1.5 prompt/training cleanup because BabyA/B exact-match remains `0.0`.
+3. If doing v1.5, try a parse-friendlier target/prompt while keeping the same eval split and metrics.
+4. If staying with v1, turn the current tables, plots, and qualitative examples into the final course report.
 
 ## Open Questions
 
-- Whether the compact Baby prompt should include richer tool descriptions after checking token coverage.
-- Whether 3 epochs are enough for BabyA/B full fine-tuning.
-- Whether FunctionGemma full eval runtime is acceptable; smoke-32 took about one minute.
+- Whether v1.5 should change the prompt/target format to improve Baby parseability.
+- Whether a scratch tiny model is worth the extra time after BabyA/B and FunctionGemma are already compared.
+- How to frame the result: BabyB clearly improves over BabyA on parseability, but both are far from reliable exact tool-call controllers.

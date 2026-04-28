@@ -1,0 +1,4 @@
+model,checkpoint,eval_set,n,parse_rate,function_accuracy,argument_exact_match,tool_call_exact_match,timestamp,config_path,source_file
+babyA,outputs/models/babyA,eval,961,0.018730489073881373,0.003121748178980229,0.0,0.0,2026-04-28T18:49:56,experiments\configs\evaluate_babyA.yaml,babyA-summary.csv
+babyB,outputs/models/babyB,eval,961,0.3558792924037461,0.053069719042663895,0.0,0.0,2026-04-28T18:41:07,experiments\configs\evaluate_babyB.yaml,babyB-summary.csv
+functiongemma:270m,functiongemma:270m,eval,961,0.9812695109261186,0.7096774193548387,0.5098855359001041,0.4963579604578564,2026-04-28T19:06:35,experiments\configs\functiongemma_zero_shot.yaml,functiongemma-summary.csv

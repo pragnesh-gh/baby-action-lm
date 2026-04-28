@@ -101,3 +101,33 @@ This file is append-only except for typo fixes.
 **Alternatives considered:** Prompt-only JSON baseline.
 
 **Consequences:** Mobile Actions tool schemas are normalized for Ollama by lowercasing schema types and dropping null properties.
+
+## 2026-04-28: Version Roadmap
+
+**Decision:** Document v1 through v4 in `docs/version_roadmap.md`.
+
+**Reason:** The project should not become confusing after v1. v1 is the course deliverable; v1.5, v2, v3, and v4 are optional strengthening paths.
+
+**Alternatives considered:** Keep only the active implementation plan.
+
+**Consequences:** Future sessions should refer to the roadmap before proposing extra experiments.
+
+## 2026-04-28: Full Evaluation Scope
+
+**Decision:** Use all 961 Mobile Actions eval examples for BabyA, BabyB, and FunctionGemma.
+
+**Reason:** The eval split is below the planned 1000-example cap, and full evaluation gives a stronger comparison than smoke metrics.
+
+**Alternatives considered:** Keep only 32-example smoke results; use a capped subset.
+
+**Consequences:** `results/summary.csv`, `results/per_tool.csv`, figures, and qualitative examples are based on the full eval split by default.
+
+## 2026-04-28: v1 Result Interpretation
+
+**Decision:** Treat the current BabyA/B result as a valid v1 baseline, but consider v1.5 if we want better Baby parseability.
+
+**Reason:** BabyB substantially improves over BabyA in parse rate, but both Baby models still have zero exact tool-call match under the v1 prompt/target format.
+
+**Alternatives considered:** Hide weak Baby results; immediately change the task definition.
+
+**Consequences:** The report should honestly distinguish "pretraining helps parseability" from "the tiny model is not yet a reliable controller."
