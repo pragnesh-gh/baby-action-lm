@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Any
 
 from babyactionlm.config import load_yaml
-from babyactionlm.data import load_mobile_actions, split_records
+from babyactionlm.data import load_mobile_actions, split_records, split_train_dev_records
 from babyactionlm.formatting import FormattedExample, format_example
 
 
@@ -88,15 +88,29 @@ def train_from_config(config_path: str | Path) -> None:
 
     config = load_yaml(config_path)
     max_length = int(config.get("max_length", 128))
+    target_format = str(config.get("target_format", "json_v1"))
     tokenizer = AutoTokenizer.from_pretrained(config["base_model_dir"])
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
     model = AutoModelForCausalLM.from_pretrained(config["base_model_dir"])
 
     records = load_mobile_actions()
-    train_records, eval_records = split_records(records)
-    train_examples = [format_example(record) for record in _limit(train_records, config.get("train_limit"))]
-    eval_examples = [format_example(record) for record in _limit(eval_records, config.get("eval_limit"))]
+    if config.get("validation_source") == "dev":
+        train_records, eval_records = split_train_dev_records(
+            records,
+            dev_size=float(config.get("dev_size", 0.1)),
+            seed=int(config.get("seed", 42)),
+        )
+    else:
+        train_records, eval_records = split_records(records)
+    train_examples = [
+        format_example(record, target_format=target_format)
+        for record in _limit(train_records, config.get("train_limit"))
+    ]
+    eval_examples = [
+        format_example(record, target_format=target_format)
+        for record in _limit(eval_records, config.get("eval_limit"))
+    ]
     train_dataset = Dataset.from_list(encode_examples(train_examples, tokenizer, max_length))
     eval_dataset = Dataset.from_list(encode_examples(eval_examples, tokenizer, max_length))
 
@@ -120,4 +134,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

@@ -1,0 +1,5 @@
+model,checkpoint,eval_set,n,parse_rate,function_accuracy,argument_exact_match,tool_call_exact_match,timestamp,config_path,trial,source_file,selected
+babyB-v15-json-3,outputs/models/v15/babyB-json-3,dev,871,0.19402985074626866,0.02525832376578645,0.0,0.0,2026-04-28T19:37:56,experiments\configs\evaluate_v15_babyB_json_3_dev.yaml,babyB-v15-json-3,results\v15\babyB-json-3-dev-summary.csv,false
+babyB-v15-json-8,outputs/models/v15/babyB-json-8,dev,871,0.31228473019517794,0.0505166475315729,0.0,0.0,2026-04-28T19:58:24,experiments\configs\evaluate_v15_babyB_json_8_dev.yaml,babyB-v15-json-8,results\v15\babyB-json-8-dev-summary.csv,false
+babyB-v15-dsl-3,outputs/models/v15/babyB-dsl-3,dev,871,0.10677382319173363,0.011481056257175661,0.01722158438576349,0.008036739380022962,2026-04-28T19:45:26,experiments\configs\evaluate_v15_babyB_dsl_3_dev.yaml,babyB-v15-dsl-3,results\v15\babyB-dsl-3-dev-summary.csv,true
+babyB-v15-dsl-8,outputs/models/v15/babyB-dsl-8,dev,871,0.09070034443168772,0.014925373134328358,0.001148105625717566,0.0,2026-04-29T09:41:27,experiments\configs\evaluate_v15_babyB_dsl_8_dev.yaml,babyB-v15-dsl-8,results\v15\babyB-dsl-8-dev-summary.csv,false

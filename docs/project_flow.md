@@ -17,7 +17,7 @@ BabyActionLM is not an Android app. It is a neural NLP experiment:
 ```mermaid
 flowchart TD
     A["Course BabyLM checkpoints<br/>BabyA and BabyB"] --> D["Fine-tune on Mobile Actions"]
-    B["google/mobile-actions dataset<br/>8,693 train / 961 eval"] --> C["Compact prompt + JSON target"]
+    B["google/mobile-actions dataset<br/>8,693 train / 961 eval"] --> C["Compact prompt + JSON/DSL target"]
     C --> D
     D --> E["BabyA/B predictions"]
     F["FunctionGemma 270M through Ollama"] --> G["Baseline predictions"]
@@ -50,6 +50,7 @@ We do not directly copy the old assignment helper script because it is older and
 7. **Run FunctionGemma:** evaluate `functiongemma:270m` on the same eval split.
 8. **Analyze:** create combined tables, plots, and qualitative examples.
 9. **Write report:** explain quantitative results, error patterns, and limitations.
+10. **v1.5 optional strengthening:** select prompt/target variants on a dev split from training rows, then evaluate the selected setup on the official eval split.
 
 ## Evaluation Checklist
 
@@ -57,5 +58,5 @@ We do not directly copy the old assignment helper script because it is older and
 - Report parse rate, function accuracy, argument exact match, and exact tool-call match.
 - Include per-tool breakdowns.
 - Include qualitative examples: correct outputs, wrong function, malformed JSON, wrong/missing arguments.
+- For v1.5, use `results/v15_trials.csv` to explain why the selected format was chosen.
 - Discuss limits honestly: tiny context window, simulated actions, no real Android execution.
-

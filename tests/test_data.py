@@ -1,4 +1,4 @@
-from babyactionlm.data import MobileActionRecord, select_eval_records, split_records, to_records
+from babyactionlm.data import MobileActionRecord, select_eval_records, split_records, split_train_dev_records, to_records
 
 
 def _row(split, command, tool_name="show_map"):
@@ -70,3 +70,21 @@ def test_select_eval_records_stratifies_by_gold_tool_when_capped():
         "send_email",
     }
 
+
+def test_split_train_dev_records_is_stratified_and_reproducible():
+    rows = []
+    for index in range(10):
+        rows.append(_row("train", f"map-{index}", "show_map"))
+        rows.append(_row("train", f"email-{index}", "send_email"))
+    records = to_records(rows)
+
+    train, dev = split_train_dev_records(records, dev_size=0.2, seed=7)
+    train_again, dev_again = split_train_dev_records(records, dev_size=0.2, seed=7)
+
+    assert [record.id for record in dev] == [record.id for record in dev_again]
+    assert len(dev) == 4
+    assert len(train) == 16
+    assert {record.messages[2]["tool_calls"][0]["function"]["name"] for record in dev} == {
+        "show_map",
+        "send_email",
+    }

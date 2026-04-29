@@ -168,7 +168,10 @@ def build_analysis(results_dir: str | Path = "results", raw_dir: str | Path = "o
         write_metric_plot(summary_rows, results / "figures" / "metric_comparison.png")
     if per_tool_rows:
         write_per_tool_plot(per_tool_rows, results / "figures" / "per_tool_exact_match.png")
-    raw_files = sorted(path for path in Path(raw_dir).glob("*.jsonl") if "smoke" not in path.name)
+    raw_files = sorted(
+        path for path in Path(raw_dir).glob("*.jsonl")
+        if "smoke" not in path.name and "-dev" not in path.name
+    )
     examples = collect_qualitative_examples(raw_files)
     write_qualitative_markdown(results / "qualitative_examples.md", examples)
 

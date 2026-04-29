@@ -1,0 +1,9 @@
+model_name: babyA-v15-dsl-3
+model_dir: outputs/models/v15/babyA-dsl-3
+target_format: dsl_v1
+eval_set: eval
+seed: 42
+max_new_tokens: 64
+raw_predictions_path: outputs/predictions/v15-babyA-dsl-3-eval.jsonl
+summary_path: results/v15-babyA-summary.csv
+per_tool_path: results/v15-babyA-per-tool.csv

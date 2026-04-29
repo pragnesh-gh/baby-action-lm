@@ -151,3 +151,58 @@ Append meaningful commands, inspections, runs, and verification outcomes here.
 **Result:** Created `results/summary.csv`, `results/per_tool.csv`, `results/figures/metric_comparison.png`, `results/figures/per_tool_exact_match.png`, and `results/qualitative_examples.md`.
 
 **Consequence:** The project now has quantitative and qualitative artifacts for the report.
+
+## 2026-04-29: v1 Training Curves
+
+**Action:** Extracted trainer histories from saved v1 BabyA/B checkpoints and regenerated the training-curve plot.
+
+**Command:** `conda --no-plugins run -n gpu-base python -m babyactionlm.training_history`
+
+**Result:** Created `results/training_history.csv` and `results/figures/training_curves.png`. The final version also includes selected v1.5 DSL-3 BabyA/B histories.
+
+**Consequence:** The report can show that loss improved during fine-tuning even when exact tool-call accuracy stayed weak.
+
+## 2026-04-29: v1.5 Trial Implementation Tests
+
+**Action:** Added DSL parsing/formatting, train/dev splitting, trainer-history extraction, and trial-selection tests.
+
+**Command:** `conda --no-plugins run -n gpu-base pytest tests/test_schema.py tests/test_v15.py -q -o addopts='-p no:cacheprovider'`
+
+**Result:** 8 focused tests passed after fixing DSL parsing to tolerate generated prefixes such as `TOOL: tool=...`.
+
+**Consequence:** DSL outputs and trial selection are covered before full v1.5 runs.
+
+## 2026-04-29: v1.5 BabyB Dev Trials
+
+**Action:** Ran four BabyB v1.5 train/eval trials on a held-out dev split from `metadata=train`.
+
+**Commands:** `python -m babyactionlm.train experiments/configs/v15_babyB_json_3.yaml`; `python -m babyactionlm.evaluate experiments/configs/evaluate_v15_babyB_json_3_dev.yaml`; repeated for JSON-8, DSL-3, and DSL-8.
+
+**Result:** `results/v15_trials.csv` selected `babyB-v15-dsl-3`. Dev metrics:
+
+- JSON-3: parse `0.1940`, function `0.0253`, exact `0.0`.
+- JSON-8: parse `0.3123`, function `0.0505`, exact `0.0`.
+- DSL-3: parse `0.1068`, function `0.0115`, exact `0.0080`.
+- DSL-8: parse `0.0907`, function `0.0149`, exact `0.0`.
+
+**Consequence:** v1.5 selection favored exact tool-call match first, so DSL-3 became the final setup despite weaker parse/function scores.
+
+## 2026-04-29: v1.5 Official Evaluation
+
+**Action:** Trained BabyA with the selected DSL-3 setup, reused the selected BabyB DSL-3 checkpoint, and evaluated both on the official 961 eval rows.
+
+**Commands:** `conda --no-plugins run -n gpu-base python -m babyactionlm.train experiments/configs/v15_babyA_dsl_3.yaml`; `conda --no-plugins run -n gpu-base python -m babyactionlm.evaluate experiments/configs/evaluate_v15_babyA_dsl_3.yaml`; `conda --no-plugins run -n gpu-base python -m babyactionlm.evaluate experiments/configs/evaluate_v15_babyB_dsl_3.yaml`
+
+**Result:** BabyA v1.5 official metrics: parse `0.3632`, function `0.0`, argument exact `0.0937`, exact `0.0`. BabyB v1.5 official metrics: parse `0.1145`, function `0.0083`, argument exact `0.0250`, exact `0.0073`.
+
+**Consequence:** v1.5 produced a small nonzero exact-match result for BabyB, but v1 JSON remains better for BabyB parse and function accuracy.
+
+## 2026-04-29: v1.5 Analysis Artifacts
+
+**Action:** Rebuilt combined tables, plots, qualitative examples, and training curves after v1.5.
+
+**Commands:** `conda --no-plugins run -n gpu-base python -m babyactionlm.training_history`; `conda --no-plugins run -n gpu-base python -m babyactionlm.analysis`
+
+**Result:** Updated `results/summary.csv`, `results/per_tool.csv`, `results/v15_trials.csv`, `results/figures/metric_comparison.png`, `results/figures/per_tool_exact_match.png`, `results/figures/training_curves.png`, and `results/qualitative_examples.md`.
+
+**Consequence:** Report artifacts now compare v1, v1.5, and FunctionGemma.

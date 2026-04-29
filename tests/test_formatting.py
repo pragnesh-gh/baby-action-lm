@@ -60,3 +60,15 @@ def test_format_example_uses_compact_prompt_and_target():
     assert example.prompt.endswith("JSON:")
     assert example.target.startswith('{"name":"create_calendar_event"')
 
+
+def test_format_target_can_emit_parse_friendly_dsl():
+    target = format_target(_record(), target_format="dsl_v1")
+
+    assert target == "tool=create_calendar_event;title=Project%20Review;datetime=2026-04-29T10%3A30%3A00"
+
+
+def test_format_example_labels_dsl_output_prompt():
+    example = format_example(_record(), target_format="dsl_v1")
+
+    assert example.prompt.endswith("TOOL:")
+    assert example.target.startswith("tool=create_calendar_event")

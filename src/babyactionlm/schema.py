@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from typing import Any, Mapping
+from urllib.parse import unquote
 
 
 @dataclass(frozen=True)
@@ -52,6 +53,8 @@ def _load_first_json_object(text: str) -> Any:
 
 def parse_tool_call(output: str | Mapping[str, Any]) -> ToolCall:
     try:
+        if isinstance(output, str) and "tool=" in output:
+            return parse_dsl_tool_call(output)
         loaded: Any = _load_first_json_object(output) if isinstance(output, str) else dict(output)
         if "function" in loaded and isinstance(loaded["function"], Mapping):
             loaded = loaded["function"]
@@ -68,6 +71,23 @@ def parse_tool_call(output: str | Mapping[str, Any]) -> ToolCall:
         return ToolCall(name=None, arguments={}, raw=output, parse_error=str(exc))
 
 
+def parse_dsl_tool_call(output: str) -> ToolCall:
+    try:
+        start = output.find("tool=")
+        if start < 0:
+            raise ValueError("no DSL tool field found")
+        fields: dict[str, str] = {}
+        for part in output[start:].strip().split(";"):
+            if not part:
+                continue
+            key, value = part.split("=", 1)
+            fields[unquote(key)] = unquote(value)
+        name = fields.pop("tool")
+        return ToolCall(name=name, arguments=fields, raw=output, parse_error=None)
+    except Exception as exc:
+        return ToolCall(name=None, arguments={}, raw=output, parse_error=str(exc))
+
+
 def from_dataset_function(function: Mapping[str, Any]) -> ToolCall:
     return parse_tool_call(
         {
@@ -75,4 +95,3 @@ def from_dataset_function(function: Mapping[str, Any]) -> ToolCall:
             "arguments": clean_arguments(function.get("arguments", {})),
         }
     )
-

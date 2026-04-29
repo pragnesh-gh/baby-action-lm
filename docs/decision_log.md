@@ -131,3 +131,33 @@ This file is append-only except for typo fixes.
 **Alternatives considered:** Hide weak Baby results; immediately change the task definition.
 
 **Consequences:** The report should honestly distinguish "pretraining helps parseability" from "the tiny model is not yet a reliable controller."
+
+## 2026-04-29: v1.5 Dev Split
+
+**Decision:** Split `metadata=train` into train/dev for v1.5 selection and reserve the 961 `metadata=eval` rows for final evaluation only.
+
+**Reason:** v1.5 changes prompt/target format and epoch count, so selecting on the official eval split would weaken the scientific protocol.
+
+**Alternatives considered:** Continue using official eval during trial selection; create a random eval subset from all rows.
+
+**Consequences:** v1.5 trial summaries live under `results/v15/`, while final official v1.5 summaries live at top level in `results/`.
+
+## 2026-04-29: v1.5 DSL Target Format
+
+**Decision:** Add `dsl_v1` targets formatted as `tool=tool_name;arg=value`, with percent-escaped values and parsing back into the shared `ToolCall` schema.
+
+**Reason:** BabyA/B may fail exact JSON generation partly because JSON punctuation and nested structure are hard under a 128-token context. A flatter target tests whether formatting is the bottleneck.
+
+**Alternatives considered:** Keep only JSON and train longer; add verbose tool descriptions; switch to a classification head.
+
+**Consequences:** v1.5 remains comparable because all outputs are normalized into the same metrics, but DSL parse/function behavior is not identical to JSON behavior.
+
+## 2026-04-29: v1.5 Trial Selection
+
+**Decision:** Select `babyB-v15-dsl-3` as the v1.5 setup.
+
+**Reason:** It was the only BabyB dev trial with nonzero exact tool-call match: exact `0.0080`, argument exact `0.0172`, parse `0.1068`, function `0.0115`.
+
+**Alternatives considered:** `json_v1` 3 epochs, `json_v1` 8 epochs, and `dsl_v1` 8 epochs. JSON-8 had better parse/function scores but still zero exact match; DSL-8 lost the exact-match signal.
+
+**Consequences:** Final v1.5 official eval uses DSL-3 for BabyA and BabyB. The report should present v1.5 as a diagnostic strengthening, not as a clean improvement over v1.

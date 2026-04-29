@@ -40,6 +40,29 @@ def split_records(records: Sequence[MobileActionRecord]) -> tuple[list[MobileAct
     return train, eval_records
 
 
+def split_train_dev_records(
+    records: Sequence[MobileActionRecord],
+    dev_size: float = 0.1,
+    seed: int = 42,
+) -> tuple[list[MobileActionRecord], list[MobileActionRecord]]:
+    train_records = [record for record in records if record.split == "train"]
+    by_tool: dict[str, list[MobileActionRecord]] = defaultdict(list)
+    for record in train_records:
+        by_tool[gold_tool_name(record)].append(record)
+
+    rng = random.Random(seed)
+    dev_ids: set[str] = set()
+    for tool in sorted(by_tool):
+        bucket = list(by_tool[tool])
+        rng.shuffle(bucket)
+        dev_count = max(1, round(len(bucket) * dev_size))
+        dev_ids.update(record.id for record in bucket[:dev_count])
+
+    dev = [record for record in train_records if record.id in dev_ids]
+    train = [record for record in train_records if record.id not in dev_ids]
+    return train, dev
+
+
 def gold_tool_name(record: MobileActionRecord) -> str:
     return record.messages[2]["tool_calls"][0]["function"]["name"]
 
@@ -66,4 +89,3 @@ def select_eval_records(records: Sequence[MobileActionRecord], cap: int = 1000, 
 
     selected.sort(key=lambda record: record.id)
     return selected[:cap]
-

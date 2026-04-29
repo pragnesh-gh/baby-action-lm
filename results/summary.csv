@@ -2,3 +2,5 @@ model,checkpoint,eval_set,n,parse_rate,function_accuracy,argument_exact_match,to
 babyA,outputs/models/babyA,eval,961,0.018730489073881373,0.003121748178980229,0.0,0.0,2026-04-28T18:49:56,experiments\configs\evaluate_babyA.yaml,babyA-summary.csv
 babyB,outputs/models/babyB,eval,961,0.3558792924037461,0.053069719042663895,0.0,0.0,2026-04-28T18:41:07,experiments\configs\evaluate_babyB.yaml,babyB-summary.csv
 functiongemma:270m,functiongemma:270m,eval,961,0.9812695109261186,0.7096774193548387,0.5098855359001041,0.4963579604578564,2026-04-28T19:06:35,experiments\configs\functiongemma_zero_shot.yaml,functiongemma-summary.csv
+babyA-v15-dsl-3,outputs/models/v15/babyA-dsl-3,eval,961,0.3631633714880333,0.0,0.09365244536940687,0.0,2026-04-29T09:49:11,experiments\configs\evaluate_v15_babyA_dsl_3.yaml,v15-babyA-summary.csv
+babyB-v15-dsl-3,outputs/models/v15/babyB-dsl-3,eval,961,0.11446409989594172,0.008324661810613945,0.02497398543184183,0.007284079084287201,2026-04-29T09:52:50,experiments\configs\evaluate_v15_babyB_dsl_3.yaml,v15-babyB-summary.csv

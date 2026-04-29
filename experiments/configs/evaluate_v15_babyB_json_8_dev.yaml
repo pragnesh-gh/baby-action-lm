@@ -1,0 +1,12 @@
+model_name: babyB-v15-json-8
+model_dir: outputs/models/v15/babyB-json-8
+target_format: json_v1
+eval_source: dev
+eval_set: dev
+dev_size: 0.1
+seed: 42
+max_new_tokens: 64
+raw_predictions_path: outputs/predictions/v15-babyB-json-8-dev.jsonl
+summary_path: results/v15/babyB-json-8-dev-summary.csv
+per_tool_path: results/v15/babyB-json-8-dev-per-tool.csv
+

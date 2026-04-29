@@ -1,0 +1,8 @@
+model,eval_set,tool,n,parse_rate,function_accuracy,argument_exact_match,tool_call_exact_match
+babyA-v15-dsl-3,eval,create_calendar_event,214,0.35514018691588783,0.0,0.0,0.0
+babyA-v15-dsl-3,eval,create_contact,182,0.32967032967032966,0.0,0.0,0.0
+babyA-v15-dsl-3,eval,open_wifi_settings,107,0.37383177570093457,0.0,0.3177570093457944,0.0
+babyA-v15-dsl-3,eval,send_email,134,0.373134328358209,0.0,0.0,0.0
+babyA-v15-dsl-3,eval,show_map,148,0.3783783783783784,0.0,0.0,0.0
+babyA-v15-dsl-3,eval,turn_off_flashlight,91,0.4065934065934066,0.0,0.3626373626373626,0.0
+babyA-v15-dsl-3,eval,turn_on_flashlight,85,0.35294117647058826,0.0,0.27058823529411763,0.0

@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from babyactionlm.config import load_yaml
-from babyactionlm.data import load_mobile_actions, select_eval_records
+from babyactionlm.data import load_mobile_actions, select_eval_records, split_train_dev_records
 from babyactionlm.formatting import format_example
 from babyactionlm.metrics import per_tool_summary, score_predictions
 from babyactionlm.reporting import write_per_tool_csv, write_summary_csv
@@ -63,11 +63,20 @@ def evaluate_from_config(config_path: str | Path) -> None:
 
     config = load_yaml(config_path)
     model_dir = config["model_dir"]
+    target_format = str(config.get("target_format", "json_v1"))
     tokenizer = AutoTokenizer.from_pretrained(model_dir)
     model = AutoModelForCausalLM.from_pretrained(model_dir)
     model.eval()
 
-    records = select_eval_records(load_mobile_actions(), cap=int(config.get("eval_cap", 1000)), seed=int(config.get("seed", 42)))
+    all_records = load_mobile_actions()
+    if config.get("eval_source") == "dev":
+        _, records = split_train_dev_records(
+            all_records,
+            dev_size=float(config.get("dev_size", 0.1)),
+            seed=int(config.get("seed", 42)),
+        )
+    else:
+        records = select_eval_records(all_records, cap=int(config.get("eval_cap", 1000)), seed=int(config.get("seed", 42)))
     if config.get("eval_limit"):
         records = records[: int(config["eval_limit"])]
 
@@ -75,7 +84,7 @@ def evaluate_from_config(config_path: str | Path) -> None:
     preds = []
     raw_rows = []
     for record in records:
-        example = format_example(record)
+        example = format_example(record, target_format=target_format)
         gold = from_dataset_function(record.messages[2]["tool_calls"][0]["function"])
         text = generate_text(model, tokenizer, example.prompt, int(config.get("max_new_tokens", 64)))
         pred = parse_tool_call(text)

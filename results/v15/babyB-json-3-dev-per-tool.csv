@@ -1,0 +1,8 @@
+model,eval_set,tool,n,parse_rate,function_accuracy,argument_exact_match,tool_call_exact_match
+babyB-v15-json-3,dev,create_calendar_event,198,0.20202020202020202,0.0,0.0,0.0
+babyB-v15-json-3,dev,create_contact,165,0.24242424242424243,0.0,0.0,0.0
+babyB-v15-json-3,dev,open_wifi_settings,107,0.21495327102803738,0.0,0.0,0.0
+babyB-v15-json-3,dev,send_email,126,0.15079365079365079,0.0,0.0,0.0
+babyB-v15-json-3,dev,show_map,125,0.2,0.176,0.0,0.0
+babyB-v15-json-3,dev,turn_off_flashlight,70,0.2,0.0,0.0,0.0
+babyB-v15-json-3,dev,turn_on_flashlight,80,0.1,0.0,0.0,0.0

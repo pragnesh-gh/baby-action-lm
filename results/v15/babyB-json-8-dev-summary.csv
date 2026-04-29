@@ -1,0 +1,2 @@
+model,checkpoint,eval_set,n,parse_rate,function_accuracy,argument_exact_match,tool_call_exact_match,timestamp,config_path
+babyB-v15-json-8,outputs/models/v15/babyB-json-8,dev,871,0.31228473019517794,0.0505166475315729,0.0,0.0,2026-04-28T19:58:24,experiments\configs\evaluate_v15_babyB_json_8_dev.yaml

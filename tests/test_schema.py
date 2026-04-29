@@ -54,3 +54,18 @@ def test_from_dataset_function_converts_datetime_and_drops_null_arguments():
         "datetime": "2026-04-28T10:30:00",
     }
 
+
+def test_parse_tool_call_accepts_dsl_format_with_escaped_values():
+    parsed = parse_tool_call("tool=send_email;subject=Budget%3DQ4;body=Line%201%3B%20Line%202")
+
+    assert parsed.name == "send_email"
+    assert parsed.arguments == {"subject": "Budget=Q4", "body": "Line 1; Line 2"}
+    assert parsed.parse_error is None
+
+
+def test_parse_tool_call_accepts_dsl_after_generated_prefix():
+    parsed = parse_tool_call("TOOL: tool=show_map;query=Berlin")
+
+    assert parsed.name == "show_map"
+    assert parsed.arguments == {"query": "Berlin"}
+    assert parsed.parse_error is None
