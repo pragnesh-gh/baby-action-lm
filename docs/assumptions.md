@@ -46,3 +46,4 @@ Last updated: 2026-09-03
 - Sina confirmed the current implementation is enough on the implementation side and the next step is the full report.
 - The final ACL-style PDF is complete and should be committed without modification.
 - The existing `babyactionlm-core` repository is the professor-facing repository; a duplicate repository is unnecessary.
+- The professor-facing repository should include BabyA/B pretraining source and provenance, but not duplicate model weights, checkpoints, raw predictions, or reconstructed public-domain corpora.

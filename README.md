@@ -34,11 +34,12 @@ The main finding is modest: BabyB produces more parseable outputs and more corre
 - `src/babyactionlm/` - dataset, formatting, training, evaluation, baseline, and analysis code
 - `tests/` - unit tests for the core pipeline
 - `experiments/configs/` - configurations used for training and evaluation
+- `pretraining/` - BabyA/B pretraining notebooks and corpus-preparation provenance
 - `results/` - curated summary CSVs, figures, and qualitative examples
 - `main.tex`, `sections/`, `references/` - report source
 - `docs/` - project scope, experiment decisions, and run history
 
-Raw datasets, model checkpoints, raw predictions, and generated caches are intentionally excluded from Git. The BabyA/B base checkpoints are course artifacts stored outside this repository.
+Raw datasets, model checkpoints, raw predictions, and generated caches are intentionally excluded from Git. The source used to pretrain BabyA/B is documented under `pretraining/`; the experiment configs point to locally generated Hugging Face checkpoint directories.
 
 ## Setup
 

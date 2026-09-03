@@ -191,3 +191,13 @@ This file is append-only except for typo fixes.
 **Alternatives considered:** Create a separate clean repository; publish only the PDF; substantially rewrite the implementation after the report was finalized.
 
 **Consequences:** The final PDF remains unchanged, the implementation that produced the reported artifacts is preserved, the README is updated for a professor, and temporary report-planning/chat-handoff files are excluded.
+
+## 2026-09-03: Include Base-Model Provenance
+
+**Decision:** Copy the BabyA/B pretraining notebooks and corpus normalization script from the earlier course assignment into `pretraining/`, with notebook outputs removed and a concise provenance manifest.
+
+**Reason:** The downstream project depends on the BabyA/B base checkpoints, and a professor reviewing only this public repository should be able to inspect how those models were created.
+
+**Alternatives considered:** Require access to a second private repository; duplicate all model checkpoints and corpora; leave the base models undocumented.
+
+**Consequences:** Pretraining source, architecture settings, and Gutenberg source IDs are visible in one repository. Generated weights and data remain excluded according to the artifact policy.
