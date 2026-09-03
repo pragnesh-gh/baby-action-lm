@@ -1,0 +1,7 @@
+\section{Experiments}
+
+For the main JSON experiment, BabyA and BabyB are fine-tuned for three epochs on all 8,693 training examples and evaluated on all 961 official evaluation examples. Training uses conservative local-GPU settings: compact 128-token examples, small batches, gradient accumulation, and half precision when CUDA is available. Raw model outputs and checkpoints are kept outside the tracked report artifacts; the paper uses the tracked CSV summaries and figures under \texttt{results/}.
+
+For the format diagnostic, BabyB is used for model-selection trials on a development subset of the training data. Four variants are compared: JSON for 3 epochs, JSON for 8 epochs, DSL for 3 epochs, and DSL for 8 epochs. Selection prioritizes exact tool-call match, then function accuracy, then parse rate. The selected variant is the 3-epoch DSL setup because it is the only development trial with nonzero exact match. BabyA and BabyB are then evaluated with this selected DSL setup on the official evaluation subset.
+
+FunctionGemma is evaluated zero-shot on the same 961 examples. It receives the tool schema through Ollama's tool-calling interface and is not fine-tuned on Mobile Actions. All systems are scored with the same parser and metric implementation.

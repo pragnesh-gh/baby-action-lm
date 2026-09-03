@@ -206,3 +206,45 @@ Append meaningful commands, inspections, runs, and verification outcomes here.
 **Result:** Updated `results/summary.csv`, `results/per_tool.csv`, `results/v15_trials.csv`, `results/figures/metric_comparison.png`, `results/figures/per_tool_exact_match.png`, `results/figures/training_curves.png`, and `results/qualitative_examples.md`.
 
 **Consequence:** Report artifacts now compare v1, v1.5, and FunctionGemma.
+
+## 2026-06-12: ACL Report Preparation
+
+**Action:** Checked the current project evidence files and official ACL style/formatting guidance, then added `docs/acl_report_handoff.md`.
+
+**Sources checked:** `results/summary.csv`, `results/v15_trials.csv`, `results/qualitative_examples.md`, `docs/report_draft.md`, `docs/project_memory.md`, https://github.com/acl-org/acl-style-files, and https://acl-org.github.io/ACLPUB/formatting.html.
+
+**Result:** The repo now has a report-writing handoff that records format constraints, supported claims, recommended figures/tables, current metrics, and a prompt for the next chat.
+
+**Consequence:** The next session can start drafting the ACL-style report without rediscovering the experiment state.
+
+## 2026-06-12: Modular ACL Report Draft
+
+**Action:** Created the first modular ACL-style LaTeX report draft from the tracked result artifacts and handoff notes.
+
+**Files created:** `report_outline.md`, `main.tex`, `sections/00_abstract.tex`, `sections/01_introduction.tex`, `sections/02_background.tex`, `sections/03_task_dataset.tex`, `sections/04_models_method.tex`, `sections/05_experiments.tex`, `sections/06_results_analysis.tex`, `sections/07_limitations_conclusion.tex`, `references/references.bib`, `acl.sty`, and `acl_natbib.bst`.
+
+**Result:** Copied report figures into `figures/` and referenced them as `figures/metric_comparison.png` and `figures/training_curves.png`. Static checks confirmed the modular paths and ASCII-only report source. Local PDF compilation was not run because `pdflatex` and `bibtex` are not installed on PATH in this environment.
+
+**Consequence:** The report folder layout is ready for Overleaf or another LaTeX environment with the official ACL style files included.
+
+## 2026-06-12: Report Cohesion Revision
+
+**Action:** Revised the ACL report draft to avoid exposing internal `v1`/`v1.5` experiment labels in the paper prose.
+
+**Files changed:** `sections/00_abstract.tex`, `sections/01_introduction.tex`, `sections/02_background.tex`, `sections/03_task_dataset.tex`, `sections/04_models_method.tex`, `sections/05_experiments.tex`, `sections/06_results_analysis.tex`, `sections/07_limitations_conclusion.tex`, and `report_outline.md`.
+
+**Result:** The report now describes the experiments as compact JSON targets and a DSL format diagnostic, expands domain-specific language once in the abstract, clarifies the GPT-wee citation, and shortens the qualitative table to avoid JSON overflow in the ACL column layout.
+
+**Consequence:** The report should read more cohesively as one experiment while preserving the original results and claim boundaries.
+
+## 2026-09-03: Final Report And Repository Review
+
+**Action:** Audited the final PDF, LaTeX source, code, configs, tests, and curated results before the professor-facing push.
+
+**Verification:** Rendered all four PDF pages for visual inspection; checked report claims against source/config/result files; ran `conda --no-plugins run -n gpu-base pytest -q`.
+
+**Result:** The PDF rendered without clipping, overlap, broken figures, or unreadable text. All 33 tests passed. The headline values in the report match `results/summary.csv`, and the model-selection values match `results/v15_trials.csv`.
+
+**Cleanup:** Updated the README, matched the LaTeX author name to the final PDF, ignored OS/LaTeX temporary files, and excluded redundant report outline, summary, and chat-handoff notes. The final PDF was not modified.
+
+**Consequence:** The existing `babyactionlm-core` repository is the canonical professor-facing project repository.

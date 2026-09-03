@@ -1,6 +1,6 @@
 # Assumptions
 
-Last updated: 2026-04-29
+Last updated: 2026-09-03
 
 ## Fixed Assumptions
 
@@ -10,6 +10,7 @@ Last updated: 2026-04-29
 - Raw datasets, model weights, checkpoints, logs, and generated caches stay out of git.
 - BabyA and BabyB checkpoints live outside this repo under `../Assignments/Main/models/`.
 - FunctionGemma is a zero-shot baseline unless a future decision changes that.
+- The final submitted report should follow ACL-style formatting and be approximately 5 pages in double-column format.
 
 ## Working Assumptions
 
@@ -17,12 +18,14 @@ Last updated: 2026-04-29
 - Full fine-tuning may need conservative batch sizes, gradient accumulation, and fp16.
 - Prompt compression may be needed if full tool descriptions exceed the tiny model context window.
 - v1.5 should be treated as diagnostic evidence unless it clearly improves several metrics at once.
+- The course report can use non-anonymous ACL final or preprint mode unless Sina requests anonymous review mode.
 
 ## Assumptions To Validate
 
 - Whether an unfine-tuned BabyA/B baseline would add enough value to justify the runtime.
 - Whether a scratch tiny model is needed for the final course report.
 - Whether v2 should focus on a control model, a prompt ablation, or an error taxonomy rather than more epoch tuning.
+- Whether references count inside the professor's "around 5 pages" expectation or can follow the ACL convention of separate reference pages.
 
 ## Validated Assumptions
 
@@ -40,3 +43,6 @@ Last updated: 2026-04-29
 - A train/dev split from `metadata=train` is reproducible with seed 42 and can be used for v1.5 selection.
 - DSL-3 gives BabyB a tiny nonzero exact-match signal on dev and official eval, but it does not make the Baby model practically reliable.
 - Longer v1.5 training is not automatically better: JSON-8 improves parse/function scores but not exact match, while DSL-8 loses the DSL-3 exact-match signal.
+- Sina confirmed the current implementation is enough on the implementation side and the next step is the full report.
+- The final ACL-style PDF is complete and should be committed without modification.
+- The existing `babyactionlm-core` repository is the professor-facing repository; a duplicate repository is unnecessary.

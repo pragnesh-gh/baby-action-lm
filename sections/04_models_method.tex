@@ -1,0 +1,13 @@
+\section{Models and Method}
+
+\paragraph{BabyA and BabyB.}
+BabyA and BabyB are tiny LLaMA-style causal language model checkpoints from the course assignment artifacts. Both are fine-tuned as sequence-to-sequence behavior through causal language modeling: the model receives the prompt plus target, and the loss is applied only to target tokens. BabyA and BabyB use the same formatting, split, optimizer settings, and evaluation scripts. This makes their comparison a test of whether the stronger BabyLM-style pretraining represented by BabyB transfers better to mobile action parsing.
+
+\paragraph{FunctionGemma reference.}
+\texttt{functiongemma:270m} is evaluated zero-shot through Ollama native tool calling. The same Mobile Actions tool schemas are normalized for Ollama, predictions are converted into the shared internal tool-call schema, and metrics are computed by the same scoring code. This baseline is stronger and larger than the Baby models and is treated as a practical local reference point, not as a same-size control.
+
+\paragraph{Metrics.}
+I report four metrics. Parse rate measures whether the generated output can be parsed into the canonical schema. Function accuracy measures whether the predicted function name equals the gold function name, over all examples. Argument exact match requires the complete argument dictionary to match after normalization. Tool-call exact match requires both the function and all arguments to match. This separation is important because a tiny model can learn a tool family without copying the correct argument span.
+
+\paragraph{Format diagnostic.}
+The compact JSON results suggested that syntax and nested structure might be a major failure point. I therefore compare JSON and DSL targets for BabyB on a held-out development split drawn only from the training rows. The official 961-example evaluation subset is untouched until final reporting.

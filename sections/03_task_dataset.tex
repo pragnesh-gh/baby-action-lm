@@ -1,0 +1,21 @@
+\section{Task and Dataset}
+
+The task is single-step mobile tool-call parsing. Each example contains a developer message with the available tool context, a user command, and an assistant tool call. The target is normalized to a canonical schema:
+
+\begin{center}
+\small
+\texttt{\{"name": tool, "arguments": \{...\}\}}
+\end{center}
+
+I use \texttt{google/mobile-actions}, a public Hugging Face dataset for mobile assistant function calls \citep{google-mobile-actions}. Hugging Face exposes the data as one split, but the rows contain a metadata field that separates 8,693 training examples from 961 evaluation examples. The report uses that official metadata split throughout.
+
+The tool inventory contains seven phone-style actions: \texttt{create\_calendar\_event}, \texttt{create\_contact}, \texttt{open\_wifi\_settings}, \texttt{send\_email}, \texttt{show\_map}, \texttt{turn\_off\_flashlight}, and \texttt{turn\_on\_flashlight}. Arguments vary from empty dictionaries for flashlight commands to multiple fields for contact, email, calendar, and map commands.
+
+Because BabyA and BabyB have a 128-token context window, the prompt is compressed. It contains a short task instruction, semicolon-separated tool signatures, the user command, and a generation marker. The main target format is compact JSON. I also test a flatter DSL target, such as:
+
+\begin{center}
+\small
+\texttt{tool=show\_map;query=Rijksmuseum in Amsterdam}
+\end{center}
+
+Both target formats are parsed back into the same canonical tool-call object before scoring, so the evaluation metrics remain comparable.

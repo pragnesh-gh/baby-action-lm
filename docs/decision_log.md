@@ -161,3 +161,33 @@ This file is append-only except for typo fixes.
 **Alternatives considered:** `json_v1` 3 epochs, `json_v1` 8 epochs, and `dsl_v1` 8 epochs. JSON-8 had better parse/function scores but still zero exact match; DSL-8 lost the exact-match signal.
 
 **Consequences:** Final v1.5 official eval uses DSL-3 for BabyA and BabyB. The report should present v1.5 as a diagnostic strengthening, not as a clean improvement over v1.
+
+## 2026-06-12: ACL Report Handoff
+
+**Decision:** Prepare the final write-up as an approximately 5-page ACL-style double-column report and use `docs/acl_report_handoff.md` as the report-writing entrypoint.
+
+**Reason:** Sina approved the implementation as enough for a project and specifically recommended the ACL style files and typical ACL paper structure.
+
+**Alternatives considered:** Keep using the one-page Markdown report summary; write a free-form university report without ACL formatting.
+
+**Consequences:** The report should prioritize a compact ACL-like structure, a main result table, metric and training-curve figures, one qualitative example, and honest limitations instead of adding new experiments by default.
+
+## 2026-06-12: Modular ACL Report Layout
+
+**Decision:** Store the final report as root-level `main.tex`, section files in `sections/`, imported report figures in `figures/`, and BibTeX entries in `references/references.bib`.
+
+**Reason:** This matches the requested import-friendly layout and makes it easy to revise individual paper sections independently.
+
+**Alternatives considered:** Keep a single monolithic `.tex` file; place the report under a nested `report/` directory.
+
+**Consequences:** Figure paths in the paper use `figures/...`, section paths use `sections/...`, and bibliography paths use `references/...`.
+
+## 2026-09-03: Professor-Facing Repository
+
+**Decision:** Publish the final report and its source in the existing `babyactionlm-core` repository rather than creating a duplicate repository.
+
+**Reason:** The existing repository contains the experiment history, implementation, tests, configs, and curated results that support the report.
+
+**Alternatives considered:** Create a separate clean repository; publish only the PDF; substantially rewrite the implementation after the report was finalized.
+
+**Consequences:** The final PDF remains unchanged, the implementation that produced the reported artifacts is preserved, the README is updated for a professor, and temporary report-planning/chat-handoff files are excluded.

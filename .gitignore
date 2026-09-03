@@ -46,5 +46,17 @@ experiments/runs/
 # OS/editor
 .DS_Store
 Thumbs.db
+desktop.ini
 .idea/
 .vscode/
+
+# Local review and LaTeX build files
+tmp/
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz

@@ -1,0 +1,10 @@
+\section{Background and Related Work}
+
+\paragraph{BabyLM-scale modeling.}
+The BabyLM framing asks how much linguistic behavior can be learned under small, developmentally inspired data and model budgets. The GPT-wee paper by \citet{bunzeck-zarriess-2023-gpt} studies very small GPT-style language models in this setting. BabyActionLM uses the same broad motivation in a downstream structured prediction task: rather than evaluating general linguistic fluency, it asks whether course BabyLM checkpoints can be adapted to a narrow action-parsing interface.
+
+\paragraph{Tool use as language modeling.}
+Toolformer frames tool use as a language-modeling problem in which a model learns when to call external APIs and what arguments to pass \citep{schick-etal-2023-toolformer}. BabyActionLM removes the harder multi-step setting and focuses on one decision: given a command and available phone tools, generate one structured call.
+
+\paragraph{Small function-calling agents.}
+TinyAgent shows that task-specific smaller language models can be trained for function calling and deployed at the edge \citep{erdogan-etal-2024-tinyagent}. FunctionGemma is a small Gemma-family model variant intended for function-calling workflows \citep{google-functiongemma}, and Ollama provides a local \texttt{functiongemma:270m} package with native tool-call examples and benchmark notes \citep{ollama-functiongemma}. BabyActionLM is smaller in scope: it uses BabyA/B course checkpoints and a simulated phone-action dataset to test whether very small models can learn the basic language-to-tool-call mapping.

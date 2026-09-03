@@ -1,0 +1,11 @@
+\section{Introduction}
+
+Modern assistants increasingly expose tool-calling interfaces: a user request is converted into a structured function name and arguments, and another system executes the action. On mobile devices, this framing is attractive because many commands are simple and private: create a contact, schedule an event, send an email, open Wi-Fi settings, toggle the flashlight, or show a place on a map. A very small local model would be useful if it could parse these requests without contacting a large cloud model.
+
+BabyActionLM asks a narrower scientific question: can BabyLM-scale pretraining help a tiny neural language model learn simulated mobile tool-call parsing? The experiment does not execute actions on an Android phone. Instead, it treats the phone as a fixed tool schema and studies language-to-structure prediction with neural causal language models.
+
+The main comparison is between two course checkpoints, BabyA and BabyB, fine-tuned with the same Mobile Actions data and evaluation pipeline. BabyB represents the stronger BabyLM-style pretrained model. I also include \texttt{functiongemma:270m}, evaluated zero-shot through Ollama native tool calling, as a practical local function-calling reference. It is not a same-size baseline; rather, it shows what a model designed for function calling can do on the same examples.
+
+The results are mixed but informative. With compact JSON targets, BabyB is clearly stronger than BabyA: parse rate rises from 1.9\% to 35.6\%, and function accuracy rises from 0.3\% to 5.3\%. However, both Baby models fail exact tool-call matching in this setting. I also test a flatter DSL target to check whether the weakness is mainly serialization. It produces a small nonzero exact-match signal for BabyB, 0.7\%, but lowers parse and function accuracy compared with the JSON target. FunctionGemma remains far ahead with 98.1\% parse rate and 49.6\% exact tool-call match.
+
+The contribution of this report is therefore not a deployable phone controller. It is a compact controlled experiment showing that BabyLM-scale pretraining can improve a tiny model's structured parsing behavior, while also showing that simple causal-LM fine-tuning with a 128-token context is not enough for reliable mobile action control.

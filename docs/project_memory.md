@@ -1,6 +1,6 @@
 # BabyActionLM Project Memory
 
-Last updated: 2026-04-29
+Last updated: 2026-09-03
 
 ## Current Thesis
 
@@ -57,9 +57,11 @@ v1.5 selection used only a held-out dev split from `metadata=train`. The best Ba
 
 - Repository: `pragnesh-gh/baby-action-lm`
 - Branch: `babyactionlm-core`
-- Initial scaffold is pushed to GitHub.
-- Core package, tests, configs, full BabyA/B v1 fine-tuning/evaluation, FunctionGemma evaluation, v1.5 DSL trialing, plots, and qualitative examples are implemented locally.
+- Core package, tests, configs, full BabyA/B v1 fine-tuning/evaluation, FunctionGemma evaluation, v1.5 DSL trialing, plots, and qualitative examples are implemented on `babyactionlm-core`.
 - Tracked result CSVs and figures exist under `results/`; raw predictions and checkpoints are ignored under `outputs/`.
+- Sina approved the implementation as enough for a course project and recommended writing an approximately 5-page ACL-style double-column report.
+- The final report is `BabyActionLM_ProjectReport.pdf`. Its modular LaTeX source is at `main.tex`, `sections/`, `figures/`, and `references/references.bib`, with official ACL style files at the repo root.
+- The README presents the finished experiment, reported results, repository layout, and reproduction commands.
 
 ## Active Implementation Plan
 
@@ -71,11 +73,9 @@ For the versioned roadmap, use `docs/version_roadmap.md`.
 
 ## Next Actions
 
-1. Run final verification and commit/push the v1.5 artifacts.
-2. Turn `docs/report_draft.md`, `results/summary.csv`, `results/v15_trials.csv`, and the figures into the final course report.
-3. Decide whether to stop at v1.5 or add a v2 control such as an unfine-tuned BabyB or scratch tiny model.
+1. Share the `babyactionlm-core` branch with the professor.
+2. Keep the scratch/random tiny model control as future work unless Sina requests more experiments.
 
 ## Open Questions
 
-- Whether a scratch tiny model is worth the extra time after BabyA/B and FunctionGemma are already compared.
-- How to frame v1.5: the DSL format gives BabyB a tiny nonzero exact-match signal, but it is not a practical controller and does not beat the v1 JSON parse/function scores.
+- Whether a future extension should add a scratch/random tiny model control.

@@ -1,85 +1,72 @@
 # BabyActionLM
 
-BabyActionLM is a course project for **Neural Networks for NLP**. The project asks whether a BabyLM-scale language model can act as a tiny local controller for mobile agents by translating natural-language phone commands into structured function calls.
+BabyActionLM is a Neural Networks for NLP course project about mobile tool-call parsing with very small language models. It tests whether the course BabyA and BabyB checkpoints can map natural-language phone commands to structured function calls.
 
-## Research Question
+The project is a simulated NLP experiment. It does not execute actions on an Android device.
 
-Can BabyLM-style pretraining help a very small neural language model learn reliable mobile action parsing?
+## Final report
 
-We compare:
+The submitted ACL-style report is available at [BabyActionLM_ProjectReport.pdf](BabyActionLM_ProjectReport.pdf). Its LaTeX source is included in `main.tex`, `sections/`, and `references/`.
 
-- a scratch tiny LLaMA-style model, if time allows
-- existing BabyA/B tiny BabyLM checkpoints from the course work
-- `functiongemma:270m` through Ollama as a modern edge function-calling baseline
+## Experiment
 
-## Task
+- Dataset: `google/mobile-actions`
+- Official metadata split: 8,693 training rows and 961 evaluation rows
+- Models: course BabyA and BabyB checkpoints
+- Reference baseline: zero-shot `functiongemma:270m` through Ollama native tool calling
+- Targets: compact JSON, plus a flatter DSL diagnostic
+- Metrics: parse rate, function accuracy, argument exact match, and complete tool-call exact match
 
-The model receives a user command such as:
+### Reported evaluation results
 
-```text
-Turn on the flashlight.
-```
+| Model | Parse rate | Function accuracy | Argument exact match | Tool-call exact match |
+| --- | ---: | ---: | ---: | ---: |
+| BabyA JSON | 0.0187 | 0.0031 | 0.0000 | 0.0000 |
+| BabyB JSON | 0.3559 | 0.0531 | 0.0000 | 0.0000 |
+| FunctionGemma 270M | 0.9813 | 0.7097 | 0.5099 | 0.4964 |
+| BabyA DSL | 0.3632 | 0.0000 | 0.0937 | 0.0000 |
+| BabyB DSL | 0.1145 | 0.0083 | 0.0250 | 0.0073 |
 
-and should emit a structured tool call such as:
+The main finding is modest: BabyB produces more parseable outputs and more correct function names than BabyA under the JSON setup, but neither Baby model is reliable enough to act as a phone controller. FunctionGemma is substantially stronger.
 
-```json
-{"name":"turn_on_flashlight","arguments":{}}
-```
+## Repository layout
 
-The phone actions are simulated with the `google/mobile-actions` dataset rather than executed on a real Android device.
+- `src/babyactionlm/` - dataset, formatting, training, evaluation, baseline, and analysis code
+- `tests/` - unit tests for the core pipeline
+- `experiments/configs/` - configurations used for training and evaluation
+- `results/` - curated summary CSVs, figures, and qualitative examples
+- `main.tex`, `sections/`, `references/` - report source
+- `docs/` - project scope, experiment decisions, and run history
 
-## Repository Layout
+Raw datasets, model checkpoints, raw predictions, and generated caches are intentionally excluded from Git. The BabyA/B base checkpoints are course artifacts stored outside this repository.
 
-- `docs/` - teacher pitch, scope, and project planning notes
-- `src/` - data preparation, formatting, training, evaluation, and baseline scripts
-- `experiments/` - YAML configs and small experiment summaries
-- `results/` - small result tables and figures only
-- `notebooks/` - optional exploratory notebooks
-- `references/` - paper notes and bibliography material
-- `tests/` - parser, formatting, metric, training, and baseline tests
+## Setup
 
-## Quickstart
-
-The current local execution target is the existing Conda environment `gpu-base`.
-
-1. Install the package and dependencies:
+The experiments were run with Python 3.11 in a Conda environment named `gpu-base`.
 
 ```powershell
 conda --no-plugins run -n gpu-base python -m pip install -r requirements.txt
 conda --no-plugins run -n gpu-base python -m pip install -e .
-```
-
-2. Run tests:
-
-```powershell
 conda --no-plugins run -n gpu-base pytest -q
 ```
 
-3. Run the BabyB smoke fine-tune:
+The checkpoint paths in `experiments/configs/` may need to be adjusted to match the local location of the course BabyA/B artifacts.
+
+## Main commands
 
 ```powershell
-conda --no-plugins run -n gpu-base python -m babyactionlm.train experiments/configs/smoke.yaml
-```
+# Fine-tune BabyA and BabyB
+conda --no-plugins run -n gpu-base python -m babyactionlm.train experiments/configs/babyA.yaml
+conda --no-plugins run -n gpu-base python -m babyactionlm.train experiments/configs/babyB.yaml
 
-4. Evaluate the BabyB smoke checkpoint:
+# Evaluate the fine-tuned checkpoints
+conda --no-plugins run -n gpu-base python -m babyactionlm.evaluate experiments/configs/evaluate_babyA.yaml
+conda --no-plugins run -n gpu-base python -m babyactionlm.evaluate experiments/configs/evaluate_babyB.yaml
 
-```powershell
-conda --no-plugins run -n gpu-base python -m babyactionlm.evaluate experiments/configs/evaluate_smoke.yaml
-```
-
-5. Pull and run the FunctionGemma smoke baseline:
-
-```powershell
+# Run the FunctionGemma reference baseline
 ollama pull functiongemma:270m
-conda --no-plugins run -n gpu-base python -m babyactionlm.ollama_baseline experiments/configs/functiongemma_smoke.yaml
+conda --no-plugins run -n gpu-base python -m babyactionlm.ollama_baseline experiments/configs/functiongemma_zero_shot.yaml
+
+# Rebuild curated tables and plots
+conda --no-plugins run -n gpu-base python -m babyactionlm.analysis
 ```
-
-6. Read the teacher-facing pitch:
-
-```powershell
-Get-Content docs\pitch_and_plan.md
-```
-
-## Important Scope Boundary
-
-This project does **not** build an Android app. It studies the NLP core of a possible on-device agent: mapping language commands to structured phone tool calls.
