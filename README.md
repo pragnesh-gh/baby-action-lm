@@ -1,8 +1,14 @@
 # BabyActionLM
 
-BabyActionLM is a Neural Networks for NLP course project about mobile tool-call parsing with very small language models. It tests whether the course BabyA and BabyB checkpoints can map natural-language phone commands to structured function calls.
+BabyActionLM is a Neural Networks for NLP project about mobile tool-call parsing with very small language models. It tests whether additional pretraining data helps a tiny language model adapt to structured mobile actions.
 
 The project is a simulated NLP experiment. It does not execute actions on an Android device.
+
+## Project pipeline
+
+BabyA and BabyB were pretrained from scratch as preliminary models for this project using LLaMA training code adapted from the course materials. BabyA used an approximately 2 MB corpus and BabyB an approximately 20 MB corpus, both assembled from cleaned public-domain Project Gutenberg texts. The two models use the same small LLaMA-style architecture and a shared 8,000-token tokenizer trained on the union of both corpora.
+
+BabyActionLM uses those pretrained models as initialization and fine-tunes them on `google/mobile-actions`. This second training stage teaches the models to map natural-language phone commands to structured tool calls. The final evaluation compares the fine-tuned BabyA and BabyB models with zero-shot `functiongemma:270m`.
 
 ## Final report
 
@@ -10,9 +16,10 @@ The submitted ACL-style report is available at [BabyActionLM_ProjectReport.pdf](
 
 ## Experiment
 
-- Dataset: `google/mobile-actions`
+- Pretraining data: approximately 2 MB for BabyA and 20 MB for BabyB from Project Gutenberg
+- Fine-tuning and evaluation data: `google/mobile-actions`
 - Official metadata split: 8,693 training rows and 961 evaluation rows
-- Models: course BabyA and BabyB checkpoints
+- Models: project-specific BabyA and BabyB pretrained checkpoints
 - Reference baseline: zero-shot `functiongemma:270m` through Ollama native tool calling
 - Targets: compact JSON, plus a flatter DSL diagnostic
 - Metrics: parse rate, function accuracy, argument exact match, and complete tool-call exact match
@@ -51,7 +58,7 @@ conda --no-plugins run -n gpu-base python -m pip install -e .
 conda --no-plugins run -n gpu-base pytest -q
 ```
 
-The checkpoint paths in `experiments/configs/` may need to be adjusted to match the local location of the course BabyA/B artifacts.
+The checkpoint paths in `experiments/configs/` may need to be adjusted to match the local location of the generated BabyA/B base models. See `pretraining/README.md` for their training code, data provenance, and model settings.
 
 ## Main commands
 

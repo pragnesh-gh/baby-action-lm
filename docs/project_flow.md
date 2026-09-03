@@ -16,7 +16,7 @@ BabyActionLM is not an Android app. It is a neural NLP experiment:
 
 ```mermaid
 flowchart TD
-    A["Course BabyLM checkpoints<br/>BabyA and BabyB"] --> D["Fine-tune on Mobile Actions"]
+    A["Project-pretrained checkpoints<br/>BabyA and BabyB"] --> D["Fine-tune on Mobile Actions"]
     B["google/mobile-actions dataset<br/>8,693 train / 961 eval"] --> C["Compact prompt + JSON/DSL target"]
     C --> D
     D --> E["BabyA/B predictions"]

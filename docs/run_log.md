@@ -251,7 +251,7 @@ Append meaningful commands, inspections, runs, and verification outcomes here.
 
 ## 2026-09-03: BabyA/B Pretraining Provenance
 
-**Action:** Traced the BabyActionLM `base_model_dir` settings to the earlier `Neural_Networks_For_NLP_Course` assignment repository and copied the relevant source into `pretraining/`.
+**Action:** Traced the BabyActionLM `base_model_dir` settings to the earlier model-development work in `Neural_Networks_For_NLP_Course` and copied the relevant source into `pretraining/`.
 
 **Source:** `helpers/ModelA-llama-from-scratch.ipynb`, `helpers/ModelB-llama-from-scratch.ipynb`, and `normalize_and_merge.py` at assignment commit `99f22c1`.
 
@@ -260,3 +260,11 @@ Append meaningful commands, inspections, runs, and verification outcomes here.
 **Verification:** Confirmed that all notebook source cells match the assignment originals, both copied notebooks contain zero saved outputs or execution counts, `pretraining/normalize_and_merge.py` compiles, and all 33 BabyActionLM tests pass.
 
 **Result:** BabyActionLM now contains the upstream base-model training code and data provenance without committing model weights, optimizer states, raw corpora, or downstream checkpoints.
+
+## 2026-09-03: README Training-Stage Clarification
+
+**Action:** Reworked the README introduction and experiment summary to distinguish BabyA/B pretraining from Mobile Actions fine-tuning.
+
+**Result:** The README now explains that BabyA/B were project-specific preliminary models trained after the course using adapted course code, identifies their separate Gutenberg corpora and shared tokenizer, and describes Mobile Actions as the downstream fine-tuning and evaluation dataset.
+
+**Consequence:** The public repository no longer describes BabyA/B as course-provided or course-assignment checkpoints.

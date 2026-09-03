@@ -62,7 +62,7 @@ v1.5 selection used only a held-out dev split from `metadata=train`. The best Ba
 - Sina approved the implementation as enough for a course project and recommended writing an approximately 5-page ACL-style double-column report.
 - The final report is `BabyActionLM_ProjectReport.pdf`. Its modular LaTeX source is at `main.tex`, `sections/`, `figures/`, and `references/references.bib`, with official ACL style files at the repo root.
 - The README presents the finished experiment, reported results, repository layout, and reproduction commands.
-- `pretraining/` contains output-stripped copies of the BabyA/B pretraining notebooks, the corpus normalization script, and a data/model provenance note from the earlier course assignment.
+- `pretraining/` contains output-stripped copies of the BabyA/B model-development notebooks, the corpus normalization script, and a data/model provenance note. These models were developed after the course using code adapted from the course materials.
 
 ## Active Implementation Plan
 

@@ -194,7 +194,7 @@ This file is append-only except for typo fixes.
 
 ## 2026-09-03: Include Base-Model Provenance
 
-**Decision:** Copy the BabyA/B pretraining notebooks and corpus normalization script from the earlier course assignment into `pretraining/`, with notebook outputs removed and a concise provenance manifest.
+**Decision:** Copy the BabyA/B pretraining notebooks and corpus normalization script from the earlier model-development work into `pretraining/`, with notebook outputs removed and a concise provenance manifest.
 
 **Reason:** The downstream project depends on the BabyA/B base checkpoints, and a professor reviewing only this public repository should be able to inspect how those models were created.
 

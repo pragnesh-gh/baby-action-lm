@@ -1,6 +1,6 @@
 # BabyA and BabyB pretraining provenance
 
-BabyActionLM fine-tunes two small causal language models that were trained earlier for the Neural Networks for NLP course. The relevant source has been copied into this repository so the relationship between the base models and the downstream experiment is visible in one place.
+BabyActionLM fine-tunes two small causal language models that were pretrained from scratch as preliminary models for this project. Their training code was adapted from the course's LLaMA-from-scratch materials. The relevant source is included here so the relationship between base-model pretraining and downstream Mobile Actions fine-tuning is visible in one place.
 
 ## Included source
 
@@ -8,7 +8,7 @@ BabyActionLM fine-tunes two small causal language models that were trained earli
 - `ModelB-llama-from-scratch.ipynb` trains BabyB on the larger pretraining corpus.
 - `normalize_and_merge.py` cleans individual Project Gutenberg texts and combines them into model corpora.
 
-The notebooks are copies of the executed assignment notebooks from commit `99f22c1` of `pragnesh-gh/Neural_Networks_For_NLP_Course`. Saved cell outputs were removed here to keep the project reviewable; the source cells were retained. The historical local paths in the notebooks must be changed when running them elsewhere.
+The notebooks are output-stripped copies of the executed model-development notebooks from commit `99f22c1` of `pragnesh-gh/Neural_Networks_For_NLP_Course`. Saved cell outputs were removed here to keep the project reviewable; the source cells were retained. The historical local paths in the notebooks must be changed when running them elsewhere.
 
 ## Pretraining data
 
